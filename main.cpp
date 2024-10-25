@@ -193,7 +193,7 @@ void gaussSeidelMethod()
             {
                 cout << "x" << j + 1 << " = " << new_solution[j] << endl;
             }
-            return ;
+            return;
         }
 
         for (int j = 0; j < m; j++)
@@ -292,7 +292,87 @@ void gaussJordanElimination()
     for (int i = 0; i < n; ++i)
         cout << "x" << i + 1 << " = " << m[i][n] << endl;
 }
-void luFactorization() { cout << "LU Factorization selected.\n"; }
+void luFactorization()
+{
+
+    const int N = 5;
+    double a[N][N + 1], l[N][N] = {0}, u[N][N] = {0}, sol[N] = {0};
+
+    int m;
+    cout << "Enter the number of equations: ";
+    cin >> m;
+
+    cout << "Enter the coefficients and constants:\n";
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j <= m; j++)
+        {
+            cin >> a[i][j];
+        }
+    }
+
+    for (int i = 0; i < m; i++)
+        l[i][i] = 1.0;
+
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = i; j < m; j++)
+        {
+            double s = 0;
+            for (int k = 0; k < i; k++)
+                s += u[k][j] * l[i][k];
+            u[i][j] = a[i][j] - s;
+        }
+        for (int j = i + 1; j < m; j++)
+        {
+            double s = 0;
+            for (int k = 0; k < i; k++)
+                s += u[k][i] * l[j][k];
+            l[j][i] = (a[j][i] - s) / u[i][i];
+        }
+    }
+
+    double v[N] = {0};
+    for (int i = 0; i < m; i++)
+    {
+        double s = 0;
+        for (int j = 0; j < i; j++)
+            s += l[i][j] * v[j];
+        v[i] = a[i][m] - s;
+    }
+
+    for (int i = m - 1; i >= 0; i--)
+    {
+        double s = 0;
+        for (int j = i + 1; j < m; j++)
+            s += u[i][j] * sol[j];
+        sol[i] = (v[i] - s) / u[i][i];
+    }
+
+    // cout << "Solution:\n";
+    // cout<< fixed << setprecision(6);
+    // for (int i = 0; i < m; i++)
+    // {
+    //     cout << "x" << i + 1 << " = "  << sol[i] << endl;
+    // }
+
+    // cout << "\nUpper Matrix:\n";
+    // for (int i = 0; i < m; i++) {
+    //     for (int j = 0; j < m; j++) {
+    //         cout << setw(10) << setprecision(4) << u[i][j];
+    //     }
+    //     cout << endl;
+    // }
+
+    // cout << "\nLower Matrix:\n";
+    // for (int i = 0; i < m; i++) {
+    //     for (int j = 0; j < m; j++) {
+    //         cout << setw(10) << setprecision(4) << l[i][j];5
+    //     }
+    //     cout << endl;
+    // }
+
+}
 
 void bisectionMethod() { cout << "Bisection Method selected.\n"; }
 void falsePositionMethod() { cout << "False Position Method selected.\n"; }
