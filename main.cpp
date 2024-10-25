@@ -548,7 +548,7 @@ void rungeKuttaMethod()
 
 void matrixInversion()
 {
-    cout << "\n--- Matrix Inversion ---\n";
+    
     int n;
     cout << "Enter the size of matrix: ";
     cin >> n;
