@@ -135,7 +135,79 @@ int main()
 // Placeholder function definitions
 
 void jacobiMethod() { cout << "Jacobi Iterative Method selected.\n"; }
-void gaussSeidelMethod() { cout << "Gauss-Seidel Iterative Method selected.\n"; }
+void gaussSeidelMethod()
+{
+    double epsilon = 0.001;
+    int n = 20;
+    double aug[n][n + 1], solution[n] = {0};
+    int m, it;
+    cout << "Enter the number of equations/variables: ";
+    cin >> m;
+    cout << "Enter the maximum number of iterations: ";
+    cin >> it;
+
+    cout << "Enter the coefficients and constant terms for each equation:\n";
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j <= m; j++)
+        {
+            cin >> aug[i][j];
+        }
+    }
+
+    double new_solution[m] = {0};
+    for (int i = 0; i < it; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            double sum = 0;
+            for (int k = 0; k < m; k++)
+            {
+                if (j != k)
+                    sum += aug[j][k] * new_solution[k];
+            }
+            new_solution[j] = (aug[j][m] - sum) / aug[j][j];
+        }
+
+        bool converged = true;
+        for (int j = 0; j < m; j++)
+        {
+            if (abs(solution[j] - new_solution[j]) > epsilon)
+            {
+                converged = false;
+                break;
+            }
+        }
+
+        cout << "Iteration " << i + 1 << ": ";
+        for (int j = 0; j < m; j++)
+        {
+            cout << "[" << j + 1 << "]: " << new_solution[j] << "  ";
+        }
+        cout << endl;
+
+        if (converged)
+        {
+            cout << "\nConverged Solution:\n";
+            for (int j = 0; j < m; j++)
+            {
+                cout << "x" << j + 1 << " = " << new_solution[j] << endl;
+            }
+            return ;
+        }
+
+        for (int j = 0; j < m; j++)
+        {
+            solution[j] = new_solution[j];
+        }
+    }
+
+    cout << "\nFinal Solution after max iterations:\n";
+    for (int j = 0; j < m; j++)
+    {
+        cout << "x" << j + 1 << " = " << new_solution[j] << endl;
+    }
+}
 void gaussElimination()
 {
 
