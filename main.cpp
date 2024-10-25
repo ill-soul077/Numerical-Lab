@@ -373,11 +373,144 @@ void luFactorization()
     // }
 
 }
+const double tol = 0.000001;
+double f(double x, double p, double q, double r, double s)
+{
 
-void bisectionMethod() { cout << "Bisection Method selected.\n"; }
-void falsePositionMethod() { cout << "False Position Method selected.\n"; }
-void secantMethod() { cout << "Secant Method selected.\n"; }
-void newtonRaphsonMethod() { cout << "Newton-Raphson Method selected.\n"; }
+    return p * x * x * x + q * x * x + r * x + s;
+}
+double f_prime(double x, double p, double q, double r, double s)
+{
+    return 3 * p * x * x + 2 * q * x + r;
+}
+void bisectionMethod() { cout << "Bisection Method selected.\n";
+     
+    cout << "Bisection Method selected.\n";
+    double p, q, r, s, a, b;
+    cout << "Enter coefficients of equation: " << endl;
+    cin >> p >> q >> r >> s;
+    cout << "Enter Interval: " << endl;
+    cin >> a >> b;
+
+    if (f(a, p, q, r, s) * f(b, p, q, r, s) >= 0)
+    {
+        cout << "Invalid interval. Function values at the boundaries must have opposite signs." << endl;
+        return;
+    }
+    double c = a;
+    while ((b - a) >= tol)
+    {
+        c = (a + b) / 2;
+        if (f(c, p,q, r, s) == 0.0)
+            break;
+        if (f(c, p, q, r, s) * f(a, p, q, r, s) < 0)
+        {
+            b = c;
+        }
+        else
+        {
+            a = c;
+        }
+    }
+    cout << "The root is approximately: " << c << endl;                  
+}
+void falsePositionMethod() { cout << "False Position Method selected.\n";
+  cout << "False Position Method selected.\n";
+
+    double p, q, r, s, a, b;
+    cout << "Enter coefficients of equation: " << endl;
+    cin >> p >> q >> r >> s;
+    cout << "Enter Interval: " << endl;
+    cin >> a >> b;
+    if (f(a, p, q, r, s) * f(b, p, q, r, s) >= 0)
+    {
+        cout << "Invalid interval. Function values at the boundaries must have opposite signs." << endl;
+        return;
+    }
+    double c = a;
+    while ((b - a) >= tol)
+    {
+        c = (a * f(b, p, q, r, s) - b * f(a, p, q, r, s)) / (f(b, p, q, r, s) - f(a, p, q, r, s));
+        if (f(c, p, q, r, s) == 0.0)
+            break;
+        if (f(c, p, q, r, s) * f(a, p, q, r, s) < 0)
+        {
+            b = c;
+        }
+        else
+        {
+            a = c;
+        }
+    }
+    cout << "The root is approximately: " << c << endl;}
+void secantMethod() { cout << "Secant Method selected.\n";
+                     cout << "Secant Method selected.\n";
+    double x_prev, x_curr, x_next, p, q, r, s, max_iter;
+
+    cout << "Enter coefficients of equation: " << endl;
+    cin >> p >> q >> r >> s;
+    cout << "Enter two initial guesses: " << endl;
+    cin >> x_prev >> x_curr;
+    cout << "Enter Max Iterations: " << endl;
+    cin >> max_iter;
+
+    for (int i = 0; i < max_iter; i++)
+    {
+        double f_prev = f(x_prev, p, q, r, s);
+        double f_curr = f(x_curr, p, q, r, s);
+
+        if (fabs(f_curr - f_prev) < 1e-10)
+        {
+            cout << "Division by a very small number, method fails." << endl;
+            return;
+        }
+
+        x_next = x_curr - f_curr * (x_curr - x_prev) / (f_curr - f_prev);
+
+        if (fabs(x_next - x_curr) < tol)
+        {
+            cout << "The root is approximately: " << x_next << endl;
+            return;
+        }
+
+        x_prev = x_curr;
+        x_curr = x_next;
+    }
+
+    cout << "Method did not converge within the maximum number of iterations." << endl;}
+void newtonRaphsonMethod() { cout << "Newton-Raphson Method selected.\n";
+                            cout << "Newton-Raphson Method selected.\n";
+
+    double x, p, q, r, s, max_iter;
+    cout << "Enter coefficients of equation: " << endl;
+    cin >> p >> q >> r >> s;
+    cout << "Enter Initial Guess: " << endl;
+    cin >> x;
+    cout << "Enter Max Iterations: " << endl;
+    cin >> max_iter;
+    for (int i = 0; i < max_iter; i++)
+    {
+        double fx = f(x, p, q, r, s);
+        double fx_prime = f_prime(x, p, q, r, s);
+
+        if (fabs(fx_prime) < 1e-10)
+        {
+            cout << "Derivative is too small, method fails." << endl;
+            return;
+        }
+
+        double x_next = x - fx / fx_prime;
+
+        if (fabs(x_next - x) < tol)
+        {
+            cout << "The root is approximately: " << x_next << endl;
+            return;
+        }
+
+        x = x_next;
+    }
+
+    cout << "Method did not converge within the maximum number of iterations." << endl;}
 
 void rungeKuttaMethod() { cout << "Runge-Kutta Method selected.\n"; }
 
