@@ -512,6 +512,113 @@ void newtonRaphsonMethod() { cout << "Newton-Raphson Method selected.\n";
 
     cout << "Method did not converge within the maximum number of iterations." << endl;}
 
-void rungeKuttaMethod() { cout << "Runge-Kutta Method selected.\n"; }
+void rungeKuttaMethod()
+{
+    // dy/dx=x+y
+    auto f=[](double x,double y)
+    {
+        return x+y;
+    };
+    double y0;
+    double x0;
+    double h;
+    int steps;
+    cout<<"y0=";
+    cin>>y0;
+    cout<<"x0=";
+    cin>>x0;
+    cout<<"h=";
+    cin>>h;
+    cout<<"Enter number of steps:";
+    cin>>steps;
+    double y = y0;
+    double x = x0;
+    for (int i = 0; i < steps; ++i)
+    {
+        double k1 = h * f(x, y);
+        double k2 = h * f(x + h / 2, y + k1 / 2);
+        double k3 = h * f(x + h / 2, y + k2 / 2);
+        double k4 = h * f(x + h, y + k3);
+        y += (k1 + 2 * k2 + 2 * k3 + k4) / 6;
+        x += h;
+    }
+    cout<<"Result of RK method:"<<y<<endl;
+}
 
-void matrixInversion() { cout << "Matrix Inversion selected.\n"; }
+
+void matrixInversion()
+{
+    cout << "\n--- Matrix Inversion ---\n";
+    int n;
+    cout << "Enter the size of matrix: ";
+    cin >> n;
+    cout << endl;
+    vector<vector<double>> A(n, vector<double>(n, 0));  // Initialize A with given size
+    cout << "Enter the elements of matrix:" << endl;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cin >> A[i][j];
+        }
+    }
+//    int n = A.size();
+    vector<vector<double>> inv(n, vector<double>(n, 0.0));
+    for (int i = 0; i < n; ++i)
+    {
+        inv[i][i] = 1.0;
+    }
+
+    for (int i = 0; i < n; ++i)
+    {
+        // Check for zero pivot and try to swap rows if necessary
+        if (fabs(A[i][i]) < 1e-9)
+        {
+            bool swapped = false;
+            for (int j = i + 1; j < n; ++j)
+            {
+                if (fabs(A[j][i]) > 1e-9)
+                {
+                    swap(A[i], A[j]);
+                    swap(inv[i], inv[j]);
+                    swapped = true;
+                    break;
+                }
+            }
+            if (!swapped)
+            {
+                cout << "Matrix is singular and cannot be inverted.\n";
+                return;
+            }
+        }
+
+        double pivot = A[i][i];
+        for (int j = 0; j < n; ++j)
+        {
+            A[i][j] /= pivot;
+            inv[i][j] /= pivot;
+        }
+
+        for (int k = 0; k < n; ++k)
+        {
+            if (i != k)
+            {
+                double factor = A[k][i];
+                for (int j = 0; j < n; ++j)
+                {
+                    A[k][j] -= factor * A[i][j];
+                    inv[k][j] -= factor * inv[i][j];
+                }
+            }
+        }
+    }
+
+    cout << "Inverted Matrix:\n";
+    cout << fixed << setprecision(4); // Set output precision
+    for (int i = 0; i < n; ++i)
+    {
+        for (int j = 0; j < n; ++j)
+            cout << inv[i][j] << " ";
+        cout << "\n";
+    }
+}
