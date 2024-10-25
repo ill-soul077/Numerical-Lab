@@ -134,7 +134,79 @@ int main()
 
 // Placeholder function definitions
 
-void jacobiMethod() { cout << "Jacobi Iterative Method selected.\n"; }
+void jacobiMethod()
+{
+
+    int n;
+    cout << "Enter the number of variables (2 to 5): ";
+    cin >> n;
+
+    vector<vector<float>> a(n, vector<float>(n));
+    vector<float> d(n);
+    vector<float> x(n, 0);
+    vector<float> x_prev(n, 0);
+    float tol;
+
+    cout << "Enter the tolerance: ";
+    cin >> tol;
+
+    cout << "Enter coefficients and constants for each equation :\n";
+    for (int i = 0; i < n; i++)
+    {
+
+        for (int j = 0; j < n; j++)
+        {
+            cin >> a[i][j];
+        }
+        cin >> d[i];
+    }
+
+    int iter = 0;
+    bool conv;
+
+    do
+    {
+        conv = true;
+
+        for (int i = 0; i < n; i++)
+        {
+            float sum = d[i];
+            for (int j = 0; j < n; j++)
+            {
+                if (i != j)
+                    sum -= a[i][j] * x_prev[j];
+            }
+            x[i] = sum / a[i][i];
+        }
+
+        iter++;
+        cout << "Iteration " << iter << ": ";
+        for (int i = 0; i < n; i++)
+        {
+            cout << "x" << i + 1 << " = " << fixed << setprecision(4) << x[i] << "  ";
+        }
+        cout << endl;
+
+        for (int i = 0; i < n; i++)
+        {
+            if (abs(x[i] - x_prev[i]) > tol)
+            {
+                conv = false;
+            }
+        }
+
+        x_prev = x;
+
+    } while (!conv);
+
+    cout << "\nSolution:\n";
+    for (int i = 0; i < n; i++)
+    {
+        cout << "x" << i + 1 << " = " << fixed << setprecision(4) << x[i] << endl;
+    }
+
+    //cout << "Jacobi Iterative Method selected.\n";
+}
 void gaussSeidelMethod()
 {
     double epsilon = 0.001;
@@ -371,7 +443,6 @@ void luFactorization()
     //     }
     //     cout << endl;
     // }
-
 }
 const double tol = 0.000001;
 double f(double x, double p, double q, double r, double s)
@@ -383,8 +454,10 @@ double f_prime(double x, double p, double q, double r, double s)
 {
     return 3 * p * x * x + 2 * q * x + r;
 }
-void bisectionMethod() { cout << "Bisection Method selected.\n";
-     
+void bisectionMethod()
+{
+    cout << "Bisection Method selected.\n";
+
     cout << "Bisection Method selected.\n";
     double p, q, r, s, a, b;
     cout << "Enter coefficients of equation: " << endl;
@@ -401,7 +474,7 @@ void bisectionMethod() { cout << "Bisection Method selected.\n";
     while ((b - a) >= tol)
     {
         c = (a + b) / 2;
-        if (f(c, p,q, r, s) == 0.0)
+        if (f(c, p, q, r, s) == 0.0)
             break;
         if (f(c, p, q, r, s) * f(a, p, q, r, s) < 0)
         {
@@ -412,10 +485,12 @@ void bisectionMethod() { cout << "Bisection Method selected.\n";
             a = c;
         }
     }
-    cout << "The root is approximately: " << c << endl;                  
+    cout << "The root is approximately: " << c << endl;
 }
-void falsePositionMethod() { cout << "False Position Method selected.\n";
-  cout << "False Position Method selected.\n";
+void falsePositionMethod()
+{
+    cout << "False Position Method selected.\n";
+    cout << "False Position Method selected.\n";
 
     double p, q, r, s, a, b;
     cout << "Enter coefficients of equation: " << endl;
@@ -442,9 +517,11 @@ void falsePositionMethod() { cout << "False Position Method selected.\n";
             a = c;
         }
     }
-    cout << "The root is approximately: " << c << endl;}
-void secantMethod() { cout << "Secant Method selected.\n";
-                     cout << "Secant Method selected.\n";
+    cout << "The root is approximately: " << c << endl;
+}
+void secantMethod()
+{ // cout << "Secant Method selected.\n";
+    cout << "Secant Method selected.\n";
     double x_prev, x_curr, x_next, p, q, r, s, max_iter;
 
     cout << "Enter coefficients of equation: " << endl;
@@ -477,9 +554,11 @@ void secantMethod() { cout << "Secant Method selected.\n";
         x_curr = x_next;
     }
 
-    cout << "Method did not converge within the maximum number of iterations." << endl;}
-void newtonRaphsonMethod() { cout << "Newton-Raphson Method selected.\n";
-                            cout << "Newton-Raphson Method selected.\n";
+    cout << "Method did not converge within the maximum number of iterations." << endl;
+}
+void newtonRaphsonMethod()
+{ // cout << "Newton-Raphson Method selected.\n";
+    cout << "Newton-Raphson Method selected.\n";
 
     double x, p, q, r, s, max_iter;
     cout << "Enter coefficients of equation: " << endl;
@@ -510,27 +589,28 @@ void newtonRaphsonMethod() { cout << "Newton-Raphson Method selected.\n";
         x = x_next;
     }
 
-    cout << "Method did not converge within the maximum number of iterations." << endl;}
+    cout << "Method did not converge within the maximum number of iterations." << endl;
+}
 
 void rungeKuttaMethod()
 {
     // dy/dx=x+y
-    auto f=[](double x,double y)
+    auto f = [](double x, double y)
     {
-        return x+y;
+        return x + y;
     };
     double y0;
     double x0;
     double h;
     int steps;
-    cout<<"y0=";
-    cin>>y0;
-    cout<<"x0=";
-    cin>>x0;
-    cout<<"h=";
-    cin>>h;
-    cout<<"Enter number of steps:";
-    cin>>steps;
+    cout << "y0=";
+    cin >> y0;
+    cout << "x0=";
+    cin >> x0;
+    cout << "h=";
+    cin >> h;
+    cout << "Enter number of steps:";
+    cin >> steps;
     double y = y0;
     double x = x0;
     for (int i = 0; i < steps; ++i)
@@ -542,18 +622,17 @@ void rungeKuttaMethod()
         y += (k1 + 2 * k2 + 2 * k3 + k4) / 6;
         x += h;
     }
-    cout<<"Result of RK method:"<<y<<endl;
+    cout << "Result of RK method:" << y << endl;
 }
-
 
 void matrixInversion()
 {
-    
+
     int n;
     cout << "Enter the size of matrix: ";
     cin >> n;
     cout << endl;
-    vector<vector<double>> A(n, vector<double>(n, 0));  // Initialize A with given size
+    vector<vector<double>> A(n, vector<double>(n, 0)); // Initialize A with given size
     cout << "Enter the elements of matrix:" << endl;
     for (int i = 0; i < n; i++)
     {
@@ -562,7 +641,7 @@ void matrixInversion()
             cin >> A[i][j];
         }
     }
-//    int n = A.size();
+    //    int n = A.size();
     vector<vector<double>> inv(n, vector<double>(n, 0.0));
     for (int i = 0; i < n; ++i)
     {
