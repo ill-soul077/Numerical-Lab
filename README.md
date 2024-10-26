@@ -1,9 +1,7 @@
 # Console Application Development Using Numerical Methods
 
-
-first part of the problem was solved by Hassan Mohammed Naquibul Hoque(2107077). 
-In this part I implemented these Five mthods to solve linear equations.
-
+1st part of the problem was solved by Hassan Mohammed Naquibul Hoque(2107077). 
+In this part I imlemented these Five mthods to solve linear equations.
 
 1. **Jacobi Iterative Method**
 2. **Gauss-Seidel Iterative Method**
@@ -11,116 +9,157 @@ In this part I implemented these Five mthods to solve linear equations.
 4. **Gauss-Jordan Elimination Method**
 5. **LU Factorization Method**
 
-Each method has a unique approach to iterating or reducing matrices to solve for the variables. Below is a detailed explanation of each algorithm, including the parameters and variables they use.Advantages and disadvantages was also discussed here
+Each of them has a different approach on the matter of the iteration or reduction of matrices in order to solve the variables. In detail, all the algorithms will be described here with the use of parameters and variables. Advantages and disadvantages were also discussed here.
 
 ---
-
 ## Jacobi Iterative Method
 
 ### Description
-The Jacobi method is an iterative algorithm for solving a system of linear equations. It starts with an initial guess for each variable and refines the solutions based on the relative values of neighboring variables. Initial guessing is sometimes important.
+The Jacobi method provides a systematic way of iteration to solve a system of linear equations. It makes a guess for each variable, refining the solutions based on the relative values of neighboring variables. Initial guessing is important sometimes.
 
 ### Key Steps
-1. Initialize all variables to zero or a guess value.
-2. For each variable, calculate the new value based on the constants and previously calculated values of other variables.
+1. Zero initialization of variables or initialization with a guess value.
+2. For every variable, new estimation based on constant and other variable values previously calculated.
 3. Check for convergence by comparing the change in variable values to a given tolerance.
 4. Repeat until all variables converge within the tolerance.
 
 ### Advantages
-- Simple to implement and understand.
+- Easy to implement and understand.
 - Useful for large, sparse matrices.
 - Suitable for parallel computing.
 - convergence under certain conditions
 
 ### Disadvantages
-- Convergence is not guaranteed; works only with strictly diagonally dominant matrices.
-- Often requires more iterations compared to Gauss-Seidel.
+- Convergence not guaranteed; it works only in the case of strictly diagonally dominant matrices.
+- Often requires more iterations as compared to Gauss-Seidel.
 - limited practical use
 
 There a lot of scope in this part of the code. Due to lack of time it had some issues in big number of variables
 ---
-
 ## Gauss-Seidel Iterative Method
 
 ### Description
-The Gauss-Seidel method is similar to the Jacobi method but improves convergence by using updated values as soon as they are computed, rather than waiting for an entire iteration.
+The Gauss-Seidel method is similar in concept to the Jacobi method but enhances convergence by utilizing updated values immediately after computation, rather than after a full iteration.
 
 ### Key Steps
-1. Set up an initial guess for each variable.
-2. For each variable, compute the new value immediately and use it in subsequent calculations within the same iteration.
-3. Check for convergence by comparing the difference between the new and old values with a tolerance.
-4. Iterate until convergence or until a maximum number of iterations is reached.
+1. Make an initial guess for each variable.
+2. For each variable, directly compute its new value and for the rest of the calculations in the same iteration make use of the values that have just been calculated.
+3. Convergence: difference between new and old value of each variable should be less than a given tolerance.
+4. Repeat until convergence is reached, or some maximum number of iterations has been performed.
 
 ### Advantages
-- Typically converges faster than Jacobi.
-- Suitable for large, sparse matrices.
-- More efficient for systems with strongly diagonally dominant matrices.
-- Effective for Small Systems
-- Improved Accuracy
+- Usually converges faster than Jacobi.
+- Suitable for large sparse matrices.
+- More eﬃcient for systems whose matrices are strongly diagonally dominant.
+- Useful for Small Systems
+- Accurary Improved
 
 ### Disadvantages
-- Requires a sequential update of variables, making it harder to parallelize.
-- Convergence is not guaranteed without specific matrix properties.
-- Sensitive to initial guesses
-- difficult with certain type of systems
+- Needs a sequential update of variables, making it more challenging to parallelize.
+- Convergence is not guaranteed without special matrix properties
+- Initial guesses sensitive
+- difficult in certain type of systems
 
-There is a some scope for improvement and increasing accurecy to solve 5 variable equations. If any one is interested let me know.
+There is some scope for improvement and increasing accuracy in order to solve 5 variable equations. If anyone is interested let me know.
 
 ---
-
 ## Gauss Elimination Method
 
 ### Description
-Gauss elimination is a method that transforms the system of equations into an upper triangular matrix, allowing easy back-substitution to find variable values.
+Gauss elimination is a method through which the system of equations is reduced to an upper triangular matrix, through which back substitution can be easily done to determine the values of the variables.
 
 ### Key Steps
 1. **Formulate the Augmented Matrix**:
-   - Convert the system of equations into an augmented matrix form \([A | B]\), where \(A\) is the coefficient matrix and \(B\) is the constants matrix.
+   - Reduce the system of equations to an augmented matrix form \\\\([A | B]\\\\), where \\\\(A\\\\) is the coefficient matrix and \\\\(B\\\\) is the constants matrix.
 
 2. **Forward Elimination**:
-   - **Select Pivot**: Identify the leftmost non-zero column as the pivot column.
-   - **Row Operations**: Use elementary row operations (swapping rows, scaling rows, and adding multiples of rows) to create zeros below the pivot element in its column.
-   - Repeat this process for each column until the matrix is in upper triangular form.
+• **Pivot Selection**: Find the leftmost column that does not have all zeros in its column and label this the pivot column.
+ • **Row Operations**: Perform elementary row operations to insert zeros below the pivot element along the column that the pivot element is in.
+ • Repeat this for each column until the whole matrix is in upper triangular form.
 
 3. **Back Substitution**:
-   - Once in upper triangular form, solve for the variables starting from the last row and substituting back into previous equations to find all variable values.
+-In upper triangular form solve the variables from the bottom and work up, substituting into previous equations to find all variable values.
 
 ### Advantages
-- Direct method with a finite number of steps.
-- Can solve any system with a unique solution.
-- Effective for dense matrices.
-- foundation for other methods like Gauss Jordan Elimination
+- It is a direct method that involves a finite number of steps.
+- Any system with unique solution can be solved
+- It is good for dense matrices
+- Basis for other methods such as Gauss Jordan Elimination
 
 ### Disadvantages
-- Computationally expensive for large systems.
-- Requires significant memory for large matrices.
-- Prone to rounding errors in floating-point arithmetic.
-- it can have round off Errors.
+- Computationally expensive for big systems.
+- Large matrices require huge amount of memory.
+- Suffers from round off Errors due to floating point arithmetic.
+- It may have round off Errors.
 
 ---
-
 ## Gauss-Jordan Elimination Method
 
 ### Description
-The Gauss-Jordan method extends Gaussian elimination by making the entire matrix diagonal, yielding the solution directly in a single step.
+Gauss-Jordan method is an extension to the Gaussian Elimination by obtaining a complete diagonal matrix, which gives a solution directly without any further step from a single step. The resulting matrix is in reduced row echelon form (RREF).
+## Key Steps
 
-### Key Steps
-1. Normalize each pivot row by dividing by the pivot element.
-2. Use row operations to make all elements above and below the pivot zero, resulting in a diagonal matrix.
-3. The matrix now shows each variable’s value in the corresponding row.
+1. **Formulate the Augmented Matrix**:
+- The system of equations can be expressed as an augmented matrix \\([A | B]\\), where \\(A\\) represents the coefficient matrix and \\(B\\) is the constants matrix.
 
+2. **Row Operations**:
+   - Perform elementary row operations to transform the matrix. Three forms of operation may be applied:
+    - **Row Swapping:** Two rows are interchanged.
+- **Row Scaling**: Multiply any row by a non-zero constant.
+     - **Row Addition**: Add a multiple of one row to another row.
+
+3. **Convert into Reduced Row Echelon Form**:
+  - Achieve RREF such that:
+    - Every leading entry in a row is 1.
+- Each leading 1 is the sole nonzero entry in its column.
+    - The leading 1's float to the right down the rows.
+
+4. **Identify Solutions**:
+   - In RREF, the solutions of the system can be directly interpreted with each variable corresponding to a leading 1 in that row.
+
+ 
+
+### Advantages
+- Gives solutions directly and does not require back-substitution.
+- Can be applied to yield matrix inverses.
+- Suitable for systems where all the unknowns need to be solved simultaneously.
+- It can also be used for an inverse matrix calculation and Rank.
+Disadvantages
+- More computational compared to Gauss elimination.
+- Higher chance of round-off errors in the arithmetic of floating-point.
+- Cannot be used on very large matrices due to memory issues.
 ---
-
 ## LU Factorization Method
 
 ### Description
-LU Factorization decomposes the coefficient matrix into two matrices, `L` (lower triangular) and `U` (upper triangular), which are used to solve the system.
+LU Factorization breaks the coefficient matrix down into two matrices, `L` (lower triangular) and `U` (upper triangular), with which to solve the system.
 
-### Key Steps
-1. Decompose the matrix into `L` and `U`.
-2. Solve for an intermediate vector using `L`.
-3. Use `U` to solve for the final solution vector.
-4. This method is useful for systems requiring multiple solutions with different constant vectors.
+## Key Steps
+
+1. **Create an Augmented Matrix**:
+	- Begin with a square matrix \(A\) to be factored. 
+
+2. **Carry Out Gaussian Elimination:
+Use Gaussian Elimination to transform A to an upper triangular matrix U. Be certain during this process to list the multipliers used in eliminating entries below the pivot elements.
+
+3. **Form Lower Triangular Matrix**:
+- As you perform row operations to introduce zeros below the pivots in, write down the corresponding multiplier in a lower triangular matrix. Entries on the diagonal of are often set to be 1.
+4. **Combine Results**:
+   - Once you have both matrices, represent your original matrix as.
+5. **Verification**:
+- Multiply matrices \(L\) and \(U\) to check whether the product is equal to the original matrix \(A\).
+ 
+### Advantages
+- Suitable for systems with multiple right-hand sides.
+- Computationally cost-effective since the decompositions `L` and `U` are used several times.
+- Solutions can be computed in a stable way if a decomposition is well-conditioned.
+-
+### Disadvantages
+- Computationally expensive decomposition of big-sized matrices.
+- Solutions may be sensitive for round-off errors if a matrix is ill-conditioned.
+- More ineffective if only one solution is to be found.
+special conditions
+Complexity increases with the increase in row
 
 ---
 
