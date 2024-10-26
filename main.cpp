@@ -208,82 +208,76 @@ void jacobiMethod()
         cout << "x" << i + 1 << " = " << fixed << setprecision(4) << x[i] << endl; // cout << "Jacobi Iterative Method selected.\n";
 
 }
-void gaussSeidelMethod()
-{
+
+void gaussSeidelMethod() {
     double epsilon = 0.001;
     int n = 20;
     double aug[n][n + 1], solution[n] = {0};
     int m, it;
+
     cout << "Enter the number of equations/variables: ";
     cin >> m;
     cout << "Enter the maximum number of iterations: ";
     cin >> it;
 
     cout << "Enter the coefficients and constant terms for each equation:\n";
-    for (int i = 0; i < m; i++)
-    {
-        for (int j = 0; j <= m; j++)
-        {
+    vector<vector<float>> coeff(m, vector<float>(m));
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j <= m; j++) {
             cin >> aug[i][j];
+            if (j < m) coeff[i][j] = aug[i][j];
         }
     }
 
+    if (!isDiagDom(coeff)) {
+        cout << "The matrix is not diagonally dominant. Gauss-Seidel may not converge.\n";
+        return;
+    }
+
     double new_solution[m] = {0};
-    for (int i = 0; i < it; i++)
-    {
-        for (int j = 0; j < m; j++)
-        {
+    for (int i = 0; i < it; i++) {
+        for (int j = 0; j < m; j++) {
             double sum = 0;
-            for (int k = 0; k < m; k++)
-            {
-                if (j != k)
-                    sum += aug[j][k] * new_solution[k];
+            for (int k = 0; k < m; k++) {
+                if (j != k) sum += aug[j][k] * new_solution[k];
             }
             new_solution[j] = (aug[j][m] - sum) / aug[j][j];
         }
 
         bool converged = true;
-        for (int j = 0; j < m; j++)
-        {
-            if (abs(solution[j] - new_solution[j]) > epsilon)
-            {
+        for (int j = 0; j < m; j++) {
+            if (fabs(solution[j] - new_solution[j]) > epsilon) {
                 converged = false;
                 break;
             }
         }
 
         cout << "Iteration " << i + 1 << ": ";
-        for (int j = 0; j < m; j++)
-        {
+        for (int j = 0; j < m; j++) {
             cout << "[" << j + 1 << "]: " << new_solution[j] << "  ";
         }
         cout << endl;
 
-        if (converged)
-        {
+        if (converged) {
             cout << "\nConverged Solution:\n";
-            for (int j = 0; j < m; j++)
-            {
+            for (int j = 0; j < m; j++) {
                 cout << "x" << j + 1 << " = " << new_solution[j] << endl;
             }
             return;
         }
 
-        for (int j = 0; j < m; j++)
-        {
+        // Update solution array with new values for the next iteration
+        for (int j = 0; j < m; j++) {
             solution[j] = new_solution[j];
         }
     }
 
     cout << "\nFinal Solution after max iterations:\n";
-    for (int j = 0; j < m; j++)
-    {
+    for (int j = 0; j < m; j++) {
         cout << "x" << j + 1 << " = " << new_solution[j] << endl;
     }
-
-
-
 }
+
 void gaussElimination()
 {
 
@@ -425,12 +419,12 @@ void luFactorization()
         sol[i] = (v[i] - s) / u[i][i];
     }
 
-    // cout << "Solution:\n";
-    // cout<< fixed << setprecision(6);
-    // for (int i = 0; i < m; i++)
-    // {
-    //     cout << "x" << i + 1 << " = "  << sol[i] << endl;
-    // }
+    cout << "Solution:\n";
+    cout<< fixed << setprecision(6);
+    for (int i = 0; i < m; i++)
+    {
+        cout << "x" << i + 1 << " = "  << sol[i] << endl;
+    }
 
     // cout << "\nUpper Matrix:\n";
     // for (int i = 0; i < m; i++) {
