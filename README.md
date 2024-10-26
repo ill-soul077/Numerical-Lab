@@ -2,7 +2,7 @@
 
 # Solution of Linear Equation
 
-This part of the project was solved by Hassan Mohammed Naquibul Hoque(2107077). 
+This part of the project was solved by **Hassan Mohammed Naquibul Hoque(2107077)**. 
 In this part I imlemented these Five mthods to solve linear equations.
 
 1. **Jacobi Iterative Method**
@@ -77,12 +77,12 @@ Gauss elimination is a method through which the system of equations is reduced t
    - Reduce the system of equations to an augmented matrix form \([A | B]\), where \(A\) is the coefficient matrix and \(B\) is the constants matrix.
 
 2. **Forward Elimination**:
-• **Pivot Selection**: Find the leftmost column that does not have all zeros in its column and label this the pivot column.
- • **Row Operations**: Perform elementary row operations to insert zeros below the pivot element along the column that the pivot element is in.
- • Repeat this for each column until the whole matrix is in upper triangular form.
+- **Pivot Selection**: Find the leftmost column that does not have all zeros in its column and label this the pivot column.
+- **Row Operations**: Perform elementary row operations to insert zeros below the pivot element along the column that the pivot element is in.
+- Repeat this for each column until the whole matrix is in upper triangular form.
 
 3. **Back Substitution**:
--In upper triangular form solve the variables from the bottom and work up, substituting into previous equations to find all variable values.
+- In upper triangular form solve the variables from the bottom and work up, substituting into previous equations to find all variable values.
 
 ### Advantages
 - It is a direct method that involves a finite number of steps.
@@ -108,15 +108,15 @@ Gauss-Jordan method is an extension to the Gaussian Elimination by obtaining a c
 
 2. **Row Operations**:
    - Perform elementary row operations to transform the matrix. Three forms of operation may be applied:
-    - **Row Swapping:** Two rows are interchanged.
-- **Row Scaling**: Multiply any row by a non-zero constant.
-     - **Row Addition**: Add a multiple of one row to another row.
+   - **Row Swapping:** Two rows are interchanged.
+   - **Row Scaling**: Multiply any row by a non-zero constant.
+   - **Row Addition**: Add a multiple of one row to another row.
 
 3. **Convert into Reduced Row Echelon Form**:
   - Achieve RREF such that:
-    - Every leading entry in a row is 1.
-- Each leading 1 is the sole nonzero entry in its column.
-    - The leading 1's float to the right down the rows.
+  - Every leading entry in a row is 1.
+  - Each leading 1 is the sole nonzero entry in its column.
+  - The leading 1's float to the right down the rows.
 
 4. **Identify Solutions**:
    - In RREF, the solutions of the system can be directly interpreted with each variable corresponding to a leading 1 in that row.
@@ -170,7 +170,7 @@ Complexity increases with the increase in row
 
 # Solution of Non Linear Equations
 
-This part of the project was implemented by Rysul Aman Nirob(2107092)
+This part of the project was implemented by **Rysul Aman Nirob(2107092)**
 
 
 1. **Bisection Method**
@@ -209,7 +209,7 @@ The Bisection method is an elementary root-finding algorithm. It repeats the div
 The False Position method also requires an interval `[a, b]` with opposite signs at the boundaries, much like the Bisection method. Instead of taking the midpoint to calculate the next approximation, linear interpolation between `a` and `b` is used:.
 
 1. Compute \( c = a -frac{f\(a) \cdot (b - a)}{f(b) - f(a)} \).
-2. Update the interval `[a, b]` depending on the sign of \ ( f(c) \ ).
+2. Update the interval `[a, b]` depending on the sign of \( f(c) \).
 3. Repeat until convergence is achieved or the interval is sufficiently small.
 
 ### Pros
@@ -262,5 +262,93 @@ The Newton-Raphson method is an iterative algorithm, using the derivative of the
 - **Not Global**: Unlike the Bisection or False Position methods, Newton-Raphson is sensitive to the initial guess and might not work globally.
 
 --- 
+
+# Runge-Kutta Method (RK4) for Ordinary Differential Equations
+
+This part project implements by **Tajnoor Sultana(2107108)** on **4th Order Runge-Kutta Method (RK4)**, one of the most popular numerical methods to solve ordinary differential equations of the kind \(\frac{dy}{dx} = f(x, y)\).
+
+The following code computes the approximate value of y at a given x using small step sizes h and starting from the initial condition (x0, y0).
+
+## Code Details
+The resulting differential equation in this example is:
+\[
+\frac{dy}{dx} = x + y
+\]
+
+The `rungeKuttaMethod` function prompts the user to enter:
+- `y0`: Value of `y` at `x0`
+- `x0`: Initial value of `x`
+- `h`: Step size
+- `steps`: Number of steps to perform
+
+Given the number of steps, use RK4 to find the approximate value of `y`.
+
+## Working Details of the Runge-Kutta Method (4th Order)
+
+The Runge-Kutta method improves accuracy by calculating four different slopes at each interval:
+1. **k1**: Slope at the start of the interval.
+2. **k2**: Slope at the midpoint of the interval using `k1`.
+3. k3: Another midpoint slope using k2.
+4. **k4**: Slope at the end of the interval using `k3`.
+
+The new value of `y` is then computed by taking a weighted average of these slopes:
+\left[
+y_{next} = y + \frac{k1 + 2 \cdot k2 + 2 \cdot k3 + k4}{6}
+\]
+
+## Advantages of the 4th Order Runge-Kutta Method
+
+- **High Accuracy**: RK4 has high accuracy with fewer steps compared to the lower-order methods, which is the reason it's one of the most implemented approaches in numerical ODE solutions.
+Stability: The method itself is numerically stable for a large class of problems.
+- **Efficiency**: Balances computational cost with accuracy, making it efficient for many engineering and scientific applications.
+
+## Disadvantages of the 4th Order Runge-Kutta Method
+
+• Fixed Step Size: Standard RK4 has a fixed step size, which can be quite inefficient in cases where the function's values change rapidly in their domain. It is, therefore, wise to use adaptive step-size RK4 methods.
+
+• **Computational Overhead**: It involves four function evaluations per step, which may be prohibitively expensive if the function is elaborate, or if the dimension is high.
+
+• Limited flexibility: Because of the fixed order of RK4, it may not adapt to problems where the precision requirement changes dynamically as well as variable-order methods do. 
+
+---
+
+
+# Matrix Inversion using Gauss-Jordan Elimination
+
+This part of the project implemented by **Tajnoor Sultana(2107108)**  a function to invert a square matrix using the **Gauss-Jordan elimination** method. The matrix inversion is crucial in various fields, including linear algebra, engineering, and computer graphics.
+
+## Working Details
+
+The `matrixInversion` function performs the following steps:
+
+1. **Input Matrix Size**: The user is prompted to enter the size of the square matrix \( n \).
+2. **Matrix Input**: The user is asked to input the elements of the \( n \times n \) matrix \( A \).
+3. **Initialize Inverted Matrix**: An identity matrix of the same size is initialized to hold the inverted matrix.
+4. **Pivoting**:
+   - For each row, check if the diagonal element (pivot) is close to zero. If it is, attempt to swap it with a lower row that has a non-zero value.
+   - If no such row exists, the matrix is singular, and the inversion is not possible.
+5. **Normalization**:
+   - Normalize the pivot row by dividing all elements in the row by the pivot value.
+6. **Row Reduction**:
+   - For each other row, eliminate the values in the current pivot column by subtracting appropriate multiples of the pivot row from the other rows.
+7. **Output Result**: After processing all rows, the inverted matrix is printed with a precision of four decimal places.
+
+## Advantages
+
+- **Direct Method**: The Gauss-Jordan elimination method provides a direct way to compute the inverse of a matrix, making it conceptually straightforward.
+- **General Applicability**: This method works for any square matrix, provided it is non-singular (invertible).
+- **Precision Control**: The function allows for precise output formatting, enabling easier interpretation of results.
+
+## Disadvantages
+
+- **Computational Complexity**: The time complexity is \( O(n^3) \), which can be inefficient for large matrices.
+- **Numerical Stability**: The method can suffer from numerical instability, particularly for ill-conditioned matrices, leading to inaccurate results.
+- **Memory Usage**: The approach requires additional space to store the inverted matrix, which can be a drawback for very large matrices.
+- **Pivoting Requirement**: The need for row swapping can complicate the algorithm, especially in cases where the matrix is close to singular.
+
+---
+
+### Requirements
+- C++ compiler
 
 
