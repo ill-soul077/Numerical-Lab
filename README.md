@@ -1,6 +1,8 @@
 # Console Application Development Using Numerical Methods
 
-1st part of the problem was solved by Hassan Mohammed Naquibul Hoque(2107077). 
+# Solution of Linear Equation
+
+This part of the project was solved by Hassan Mohammed Naquibul Hoque(2107077). 
 In this part I imlemented these Five mthods to solve linear equations.
 
 1. **Jacobi Iterative Method**
@@ -34,7 +36,9 @@ The Jacobi method provides a systematic way of iteration to solve a system of li
 - Often requires more iterations as compared to Gauss-Seidel.
 - limited practical use
 
-There a lot of scope in this part of the code. Due to lack of time it had some issues in big number of variables
+ There a lot of scope in this part of the code. Due to lack of time it had some issues in big number of variables
+
+
 ---
 ## Gauss-Seidel Iterative Method
 
@@ -70,7 +74,7 @@ Gauss elimination is a method through which the system of equations is reduced t
 
 ### Key Steps
 1. **Formulate the Augmented Matrix**:
-   - Reduce the system of equations to an augmented matrix form \\\\([A | B]\\\\), where \\\\(A\\\\) is the coefficient matrix and \\\\(B\\\\) is the constants matrix.
+   - Reduce the system of equations to an augmented matrix form \([A | B]\), where \(A\) is the coefficient matrix and \(B\) is the constants matrix.
 
 2. **Forward Elimination**:
 • **Pivot Selection**: Find the leftmost column that does not have all zeros in its column and label this the pivot column.
@@ -100,7 +104,7 @@ Gauss-Jordan method is an extension to the Gaussian Elimination by obtaining a c
 ## Key Steps
 
 1. **Formulate the Augmented Matrix**:
-- The system of equations can be expressed as an augmented matrix \\([A | B]\\), where \\(A\\) represents the coefficient matrix and \\(B\\) is the constants matrix.
+- The system of equations can be expressed as an augmented matrix \([A | B]\), where \(A\) represents the coefficient matrix and \(B\) is the constants matrix.
 
 2. **Row Operations**:
    - Perform elementary row operations to transform the matrix. Three forms of operation may be applied:
@@ -162,4 +166,101 @@ special conditions
 Complexity increases with the increase in row
 
 ---
+
+
+# Solution of Non Linear Equations
+
+This part of the project was implemented by Rysul Aman Nirob(2107092)
+
+
+1. **Bisection Method**
+2. **False Position Method (Regula Falsi)**
+3. **Secant Method**
+4. **Newton-Raphson Method**
+
+The unique characteristics of each technique make them suitable for different problem types. The following is the list of each algorithm with their commonly associated advantages and disadvantages.
+
+---
+
+## 1. Bisection Method
+
+### Working Details
+The Bisection method is an elementary root-finding algorithm. It repeats the division of an interval in half, selecting that subinterval in which the root lies.
+
+1. In this method, two initial guesses are given: `a` and `b`, such that \( f(a) \) and \( f(b) \) have opposite signs, meaning there will always be at least one root in between.
+2. The midpoint \ ( c = \frac{a + b}{2} \) is found.
+3. If \( f(c) = 0 \), the process stops since the root is found.
+4. Otherwise, the interval `[a, b]` is updated according to the sign of \( f(c) \), and the process repeats until the interval is sufficiently small.
+
+### Advantages
+- **Guaranteed Convergence**: So long as the function is continuous and the assumptions hold, the method will always converge to a solution.
+- **Simplicity**: It is easy to learn and use the Bisection method.
+- **Global Method**: It does not require a good initial guess, but only the interval over which the function changes sign.
+
+### Disadvantages
+- Slow convergence: The method converges slowly with linear convergence; hence, it becomes inefficient when high precision is required.
+- Requires an Interval: It requires a valid interval where the function changes signs, which reduces its applicability in some cases.
+
+---
+
+## 2. False Position Method (Regula Falsi)
+
+### Job Details
+The False Position method also requires an interval `[a, b]` with opposite signs at the boundaries, much like the Bisection method. Instead of taking the midpoint to calculate the next approximation, linear interpolation between `a` and `b` is used:.
+
+1. Compute \( c = a -frac{f\(a) \cdot (b - a)}{f(b) - f(a)} \).
+2. Update the interval `[a, b]` depending on the sign of \ ( f(c) \ ).
+3. Repeat until convergence is achieved or the interval is sufficiently small.
+
+### Pros
+• Faster Convergence: It converges generally faster than the Bisection method because it makes use of the shape of the function.
+- **Global Method**: It does not require an initial guess, only an interval where the function changes sign.
+
+### Disadvantages
+• **Convergence Problems**: If one of the function values at the interval endpoints is closer to the root, then the method may converge slowly.
+- **Requires a Valid Interval**: Like Bisection, it requires an interval where the function changes sign, which again limits its use.
+
+---
+
+## 3. Secant Method
+
+### Working Details
+The Secant method is an iterative root-finding algorithm that doesn’t require the derivative of the function. It uses two initial guesses `x0` and `x1`, and the next approximation is calculated by fitting a secant line through these points.
+
+1. Compute \( x_{n+1} = x_n - \frac{f(x_n) \cdot (x_n - x_{n-1})}{f(x_n) - f(x_{n-1})} \).
+2. Repeat until the change in `x` is smaller than a predefined tolerance.
+
+### Advantages
+- **No Derivative Required**: It does not require computation of the derivative of the function like the Newton-Raphson method.
+- Faster than Bisection: Typically has a faster convergence than Bisection and False Position for well-behaved functions.
+
+### Disadvantages
+
+- **Convergence is Not Guaranteed**: Might not converge if initial guesses are bad or if the function does not behave well.
+
+- **Requires Two Initial Guesses**: It may not always be easy to find two good initial guesses.
+
+---
+
+## 4. Newton-Raphson Method
+
+### Working Details
+
+The Newton-Raphson method is an iterative algorithm, using the derivative of the function for fast convergence. From an initial guess, x0, the next approximation, x(n+1), can be found as follows:
+
+1. \( x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} \).
+
+2. Repeat until the difference between successive approximations falls below a prescribed tolerance.
+
+### Advantages
+
+• **Fast Convergence**: Assuming quadratic convergence, it is one of the fastest methods for root finding when it works. 
+- **Efficiency**: Fewer iterations are usually needed compared to other techniques, so it is efficient for large computations. 
+### Disadvantages 
+- **Needs Derivative**: It requires the derivative of the function, which may be complicated or time-consuming to calculate.
+- **Sensitive to Initial Guess**: Unless the initial guess is very close to the root, the method may diverge or converge to a spurious root.
+- **Not Global**: Unlike the Bisection or False Position methods, Newton-Raphson is sensitive to the initial guess and might not work globally.
+
+--- 
+
 
