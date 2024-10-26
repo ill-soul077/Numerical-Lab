@@ -455,8 +455,6 @@ double f_prime(double x, double p, double q, double r, double s)
 void bisectionMethod()
 {
     cout << "Bisection Method selected.\n";
-
-    cout << "Bisection Method selected.\n";
     double p, q, r, s, a, b;
     cout << "Enter coefficients of equation: " << endl;
     cin >> p >> q >> r >> s;
@@ -488,8 +486,6 @@ void bisectionMethod()
 void falsePositionMethod()
 {
     cout << "False Position Method selected.\n";
-    cout << "False Position Method selected.\n";
-
     double p, q, r, s, a, b;
     cout << "Enter coefficients of equation: " << endl;
     cin >> p >> q >> r >> s;
@@ -506,6 +502,8 @@ void falsePositionMethod()
         c = (a * f(b, p, q, r, s) - b * f(a, p, q, r, s)) / (f(b, p, q, r, s) - f(a, p, q, r, s));
         if (f(c, p, q, r, s) == 0.0)
             break;
+        if (fabs(f(c, p, q, r, s)) < tol)
+            break;
         if (f(c, p, q, r, s) * f(a, p, q, r, s) < 0)
         {
             b = c;
@@ -518,9 +516,8 @@ void falsePositionMethod()
     cout << "The root is approximately: " << c << endl;
 }
 void secantMethod()
-{ // cout << "Secant Method selected.\n";
-    cout << "Secant Method selected.\n";
-    double x_prev, x_curr, x_next, p, q, r, s, max_iter;
+{      cout << "Secant Method selected.\n";
+        double x_prev, x_curr, x_next, p, q, r, s, max_iter;
 
     cout << "Enter coefficients of equation: " << endl;
     cin >> p >> q >> r >> s;
@@ -555,7 +552,7 @@ void secantMethod()
     cout << "Method did not converge within the maximum number of iterations." << endl;
 }
 void newtonRaphsonMethod()
-{ // cout << "Newton-Raphson Method selected.\n";
+{ 
     cout << "Newton-Raphson Method selected.\n";
 
     double x, p, q, r, s, max_iter;
