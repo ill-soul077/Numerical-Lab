@@ -2,6 +2,7 @@
 using namespace std;
 
 // Function prototypes for Linear Equations methods
+bool isDiagDom(const vector<vector<float>>& a);
 void jacobiMethod();
 void gaussSeidelMethod();
 void gaussElimination();
@@ -134,31 +135,45 @@ int main()
 
 // Placeholder function definitions
 
+bool isDiagDom(const vector<vector<float>>& a) {
+    int n = a.size();
+    for (int i = 0; i < n; i++) {
+        float diag = fabs(a[i][i]);
+        float sum = 0;
+        for (int j = 0; j < n; j++) if (i != j) sum += fabs(a[i][j]);
+        if (diag < sum) return false;
+    }
+    return true;
+}
+
 void jacobiMethod()
 {
 
     int n;
     cout << "Enter the number of variables (2 to 5): ";
+
     cin >> n;
 
     vector<vector<float>> a(n, vector<float>(n));
-    vector<float> d(n);
-    vector<float> x(n, 0);
-    vector<float> x_prev(n, 0);
+    vector<float> d(n), x(n, 0), x0(n, 0);
     float tol;
 
     cout << "Enter the tolerance: ";
+
     cin >> tol;
 
-    cout << "Enter coefficients and constants for each equation :\n";
+    cout << "Coefficients & constants:\n";
     for (int i = 0; i < n; i++)
     {
-
         for (int j = 0; j < n; j++)
-        {
             cin >> a[i][j];
-        }
         cin >> d[i];
+    }
+
+    if (!isDiagDom(a))
+    {
+        cout << "Matrix is not diagonally dominant. Jacobi method may not converge.\n";
+        return ;
     }
 
     int iter = 0;
@@ -167,45 +182,31 @@ void jacobiMethod()
     do
     {
         conv = true;
-
         for (int i = 0; i < n; i++)
         {
             float sum = d[i];
             for (int j = 0; j < n; j++)
-            {
                 if (i != j)
-                    sum -= a[i][j] * x_prev[j];
-            }
+                    sum -= a[i][j] * x0[j];
             x[i] = sum / a[i][i];
         }
 
         iter++;
-        cout << "Iteration " << iter << ": ";
+        cout << "Iter " << iter << ": ";
         for (int i = 0; i < n; i++)
-        {
             cout << "x" << i + 1 << " = " << fixed << setprecision(4) << x[i] << "  ";
-        }
         cout << endl;
 
         for (int i = 0; i < n; i++)
-        {
-            if (abs(x[i] - x_prev[i]) > tol)
-            {
+            if (fabs(x[i] - x0[i]) > tol)
                 conv = false;
-            }
-        }
-
-        x_prev = x;
-
+        x0 = x;
     } while (!conv);
 
     cout << "\nSolution:\n";
     for (int i = 0; i < n; i++)
-    {
-        cout << "x" << i + 1 << " = " << fixed << setprecision(4) << x[i] << endl;
-    }
+        cout << "x" << i + 1 << " = " << fixed << setprecision(4) << x[i] << endl; // cout << "Jacobi Iterative Method selected.\n";
 
-    //cout << "Jacobi Iterative Method selected.\n";
 }
 void gaussSeidelMethod()
 {
@@ -279,6 +280,9 @@ void gaussSeidelMethod()
     {
         cout << "x" << j + 1 << " = " << new_solution[j] << endl;
     }
+
+
+
 }
 void gaussElimination()
 {
